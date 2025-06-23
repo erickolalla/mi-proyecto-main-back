@@ -12,8 +12,8 @@ import { LocalStrategy } from './strategies/local.strategy';
     UsersModule, // AuthService necesita UsersService
     PassportModule, // Necesario para la estrategia local
   ],
-  providers: [AuthService, LocalStrategy], // Solo AuthService y LocalStrategy
   controllers: [AuthController],
+  providers: [AuthService, LocalStrategy], // Solo AuthService y LocalStrategy  
   exports: [AuthService], // Exporta AuthService si otros módulos lo necesitan
 })
 export class AuthModule {}

@@ -18,12 +18,12 @@ export class ProductsService {
   ) {}
 
   async create(createProductDto: CreateProductDto): Promise<Product> {
-    const { categoria, ...rest } = createProductDto;
+    const { categoria_id, ...rest } = createProductDto;
 
-    // Buscar la categoría por su nombre
-    const foundCategory = await this.categoryRepository.findOne({ where: { nombre: categoria.nombre } });
+    // Buscar la categoría por su ID
+    const foundCategory = await this.categoryRepository.findOne({ where: { id: categoria_id } });
     if (!foundCategory) {
-      throw new BadRequestException(`Category with name "${categoria.nombre}" not found.`);
+      throw new BadRequestException(`Category with ID "${categoria_id}" not found.`);
     }
 
     const product = this.productRepository.create({
@@ -88,15 +88,15 @@ export class ProductsService {
   async update(id: number, updateProductDto: UpdateProductDto): Promise<Product> {
     const product = await this.findOne(id); // Reutiliza findOne para validar existencia y cargar categoría
 
-    // Si se proporciona un nuevo nombre de categoría, búscalo y asignalo
-    if (updateProductDto.categoria && updateProductDto.categoria.nombre) {
-      const newCategory = await this.categoryRepository.findOne({ where: { nombre: updateProductDto.categoria.nombre } });
+    // Si se proporciona un nuevo ID de categoría, búscalo y asignalo
+    if (updateProductDto.categoria_id) {
+      const newCategory = await this.categoryRepository.findOne({ where: { id: updateProductDto.categoria_id } });
       if (!newCategory) {
-        throw new BadRequestException(`Category with name "${updateProductDto.categoria.nombre}" not found.`);
+        throw new BadRequestException(`Category with ID "${updateProductDto.categoria_id}" not found.`);
       }
       product.categoria = newCategory;
-      // Elimina la propiedad 'categoria' del DTO para evitar que Object.assign intente sobreescribirla incorrectamente
-      delete updateProductDto.categoria;
+      // Elimina la propiedad 'categoria_id' del DTO para evitar que Object.assign intente sobreescribirla incorrectamente
+      delete updateProductDto.categoria_id;
     }
 
     // Asigna las propiedades restantes

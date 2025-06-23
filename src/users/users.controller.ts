@@ -12,7 +12,14 @@ export class UsersController {
   @Post()
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+    // Convert fecha_nacimiento from string to Date if present
+    const userData = {
+      ...createUserDto,
+      fecha_nacimiento: createUserDto.fecha_nacimiento
+        ? new Date(createUserDto.fecha_nacimiento)
+        : undefined,
+    };
+    return this.usersService.create(userData);
   }
 
   @Get()
@@ -27,7 +34,14 @@ export class UsersController {
 
   @Patch(':id')
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(+id, updateUserDto);
+    // Convert fecha_nacimiento from string to Date if present
+    const userData = {
+      ...updateUserDto,
+      fecha_nacimiento: updateUserDto.fecha_nacimiento
+        ? new Date(updateUserDto.fecha_nacimiento)
+        : undefined,
+    };
+    return this.usersService.update(+id, userData);
   }
 
   @Delete(':id')

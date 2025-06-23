@@ -1,4 +1,3 @@
-// src/products/dto/create-product.dto.ts
 import {
   IsNotEmpty,
   IsString,
@@ -7,17 +6,8 @@ import {
   Min,
   IsArray,
   ArrayMinSize,
-  IsObject,
-  ValidateNested,
+  IsInt,
 } from 'class-validator';
-import { Type } from 'class-transformer';
-
-// DTO para la categoría anidada
-class CategoryDto {
-  @IsNotEmpty()
-  @IsString()
-  nombre: string;
-}
 
 export class CreateProductDto {
   @IsNotEmpty()
@@ -30,10 +20,8 @@ export class CreateProductDto {
   precio: number;
 
   @IsNotEmpty()
-  @IsObject()
-  @ValidateNested()
-  @Type(() => CategoryDto)
-  categoria: CategoryDto; // Espera un objeto con el nombre de la categoría
+  @IsInt()
+  categoria_id: number;
 
   @IsNotEmpty()
   @IsString()
@@ -67,6 +55,6 @@ export class CreateProductDto {
   etiquetas?: string;
 
   @IsOptional()
-  @IsString() // Se espera el nombre del archivo, ej: "H_1.png"
+  @IsString()
   imagen_nombre_archivo?: string;
 }

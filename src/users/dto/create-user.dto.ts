@@ -1,18 +1,26 @@
 // src/users/dto/create-user.dto.ts
-import { IsEmail, IsString, IsNotEmpty, MinLength, IsOptional } from 'class-validator';
+import { IsEmail, IsString, IsNotEmpty, MinLength, IsOptional, IsDateString } from 'class-validator';
 
 export class CreateUserDto {
   @IsString({ message: 'El nombre debe ser una cadena de texto.' })
   @IsNotEmpty({ message: 'El nombre es obligatorio.' })
-  nombre: string;
+  nombres: string;
 
   @IsString({ message: 'El apellido debe ser una cadena de texto.' })
   @IsNotEmpty({ message: 'El apellido es obligatorio.' })
-  apellido: string;
+  apellidos: string;
+
+  @IsString()
+  @IsNotEmpty({message: 'La cédula es obligatoria.'})
+  cedula: string;
 
   @IsEmail({}, { message: 'El correo electrónico debe ser válido.' })
   @IsNotEmpty({ message: 'El correo electrónico es obligatorio.' })
   correo_electronico: string;
+
+  @IsDateString()
+  @IsNotEmpty({ message: 'La fecha de nacimiento es obligatoria.' })
+  fecha_nacimiento: string;
 
   @IsString({ message: 'La contraseña debe ser una cadena de texto.' })
   @IsNotEmpty({ message: 'La contraseña es obligatoria.' })

@@ -1,5 +1,5 @@
 // src/auth/auth.controller.ts
-import { Controller, Post, Request, UseGuards, Body, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Request, UseGuards, Body, HttpCode, HttpStatus, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { LoginUserDto } from 'src/users/dto/login-user.dto';
@@ -8,6 +8,7 @@ import { CreateUserDto } from 'src/users/dto/create-user.dto';
     // <-- ¡Importa tu nuevo DTO aquí!
 
 @Controller('auth')
+@UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
 export class AuthController {
   constructor(private authService: AuthService) {}
 

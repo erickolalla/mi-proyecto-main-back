@@ -6,14 +6,20 @@ import { extname } from 'path';
 export const multerConfig: MulterModuleOptions = {
   storage: diskStorage({
     destination: (req, file, cb) => {
-      const category = req.body.categoria || 'hombres';
+      const category = req.body.categoria_id === '1' ? 'mujeres' :
+                       req.body.categoria_id === '2' ? 'hombres' :
+                       req.body.categoria_id === '3' ? 'ninas' :
+                       req.body.categoria_id === '4' ? 'ninos' : 'hombres';
       const basePath = 'E:\\10mo Semestre\\Sistemas de Información Empresarial\\Proyecto\\mi-proyecto-main\\public\\images';
       const uploadPath = `${basePath}\\${category}`;
       if (!existsSync(uploadPath)) mkdirSync(uploadPath, { recursive: true });
       cb(null, uploadPath);
     },
     filename: (req, file, cb) => {
-      const category = req.body.categoria || 'hombres';
+      const category = req.body.categoria_id === '1' ? 'mujeres' :
+                       req.body.categoria_id === '2' ? 'hombres' :
+                       req.body.categoria_id === '3' ? 'ninas' :
+                       req.body.categoria_id === '4' ? 'ninos' : 'hombres';
       const basePath = 'E:\\10mo Semestre\\Sistemas de Información Empresarial\\Proyecto\\mi-proyecto-main\\public\\images';
       const files = existsSync(`${basePath}\\${category}`) 
         ? require('fs').readdirSync(`${basePath}\\${category}`).filter(f => f.startsWith(getPrefix(category))) 

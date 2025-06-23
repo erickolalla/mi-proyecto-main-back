@@ -5,11 +5,14 @@ import { ProductsService } from './products.service';
 import { ProductsController } from './products.controller';
 import { Category } from 'src/entities/category.entity';
 import { Product } from 'src/entities/product.entity';
+import { MulterModule } from '@nestjs/platform-express';
+import { multerConfig } from 'src/multer.config';
 
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Product, Category]), // Ambas entidades registradas aquí
+    MulterModule.register(multerConfig),
   ],
   controllers: [ProductsController],
   providers: [ProductsService],
